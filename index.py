@@ -1,6 +1,8 @@
 #Nessecary Imports#
 import csv 
 from yattag import Doc, indent
+import xml.etree.ElementTree as ET
+
 doc, tag, text = Doc().tagtext()
 
     
@@ -50,8 +52,38 @@ class Inventory:
         with open('./products.xml','w') as file :
             file.write(result)
 
-a=Inventory()
-a.read_file()
-a.get_xml()
-for i in a.inventory:
-    print(i.sku)
+
+class Product_xml():
+    def __init__(self,state,ids,sku,name,minimum,stock):
+        self.state=state
+        self.ids=ids
+        self.sku=sku
+        self.name=name
+        self.minimum=minimum
+        self.stock=stock
+        if(stock==0):
+            self.in_inventory=False
+        else:
+            self.in_inventory=True
+    def __str__(self):
+        return self.in_inventory
+class inventory_xml():
+    inventory=[]
+    def __init__(self):
+        with open("file.xml") as xmlfile:
+            tree = ET.parse(xmlfile)   
+            root = tree.getroot() 
+            products=root.findall('./Product')
+            j=0
+            for i in products:
+                print(j)
+                j+=1
+                state=i.find('State').text
+                ids=i.find('Id').text
+                sku=i.find('Sku').text
+                stock=i.find('Stocks').find('Status').find("Active").text
+                self.inventory.append(Product_xml(state,ids,sku,"name","minimum",stock))
+
+
+a=inventory_xml()
+a.inventory[0]
