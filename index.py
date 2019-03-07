@@ -54,12 +54,10 @@ class Inventory:
 
 
 class Product_xml():
-    def __init__(self,state,ids,sku,name,minimum,stock):
+    def __init__(self,state,ids,sku,stock):
         self.state=state
         self.ids=ids
         self.sku=sku
-        self.name=name
-        self.minimum=minimum
         self.stock=stock
         if(stock==0):
             self.in_inventory=False
@@ -76,13 +74,18 @@ class inventory_xml():
             products=root.findall('./Product')
             j=0
             for i in products:
-                print(j)
-                j+=1
                 state=i.find('State').text
                 ids=i.find('Id').text
                 sku=i.find('Sku').text
-                stock=i.find('Stocks').find('Status').find("Active").text
-                self.inventory.append(Product_xml(state,ids,sku,"name","minimum",stock))
+                try:
+                   stock=i.find('Stocks').find('Stock').find("Qty").text
+
+                except:
+                    try:
+                        stock=i.find('Stocks').find('Status').find('Active').text                   
+                    except:
+                        stock=0                            
+                self.inventory.append(Product_xml(state,ids,sku,stock))
 
 
 a=inventory_xml()
