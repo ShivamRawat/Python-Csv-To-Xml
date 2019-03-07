@@ -2,7 +2,7 @@
 import csv 
 from yattag import Doc, indent
 import xml.etree.ElementTree as ET
-
+import requests
 doc, tag, text = Doc().tagtext()
 
     
@@ -68,6 +68,10 @@ class Product_xml():
 class inventory_xml():
     inventory=[]
     def __init__(self):
+        url="http://shop.unas.hu/admin_export.php?shop_id=27316&format=unas_xml&auth=e5c855a6d4"
+        resp = requests.get(url)
+        with open('file.xml', 'wb') as f: 
+            f.write(resp.content) 
         with open("file.xml") as xmlfile:
             tree = ET.parse(xmlfile)   
             root = tree.getroot() 
