@@ -54,11 +54,13 @@ class Inventory:
 
 
 class Product_xml():
-    def __init__(self,state,ids,sku,stock):
+    def __init__(self,state,ids,sku,stock,image,price):
         self.state=state
         self.ids=ids
         self.sku=sku
         self.stock=stock
+        self.image=image
+        self.price=price
         if(stock==0):
             self.in_inventory=False
         else:
@@ -88,9 +90,18 @@ class inventory_xml():
                     try:
                         stock=i.find('Stocks').find('Status').find('Active').text                   
                     except:
-                        stock=0                            
-                self.inventory.append(Product_xml(state,ids,sku,stock))
+                        stock=0     
+                try : 
+                    image=i.find('Url').text
+                except:
+                    image="N/A"
+                try:
+                    price=i.find('Prices').find('Price').find('Net').text
+                except:
+                    price="N\A"
+                self.inventory.append(Product_xml(state,ids,sku,stock,image,price))
 
 
 a=inventory_xml()
 a.inventory[0]
+print(a)
