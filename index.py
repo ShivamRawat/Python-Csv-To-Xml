@@ -96,7 +96,13 @@ class inventory_xml():
                 except:
                     image="N/A"
                 try:
-                    price=i.find('Prices').find('Price').find('Net').text
+                    price=i.find('Prices').findAll('Price')
+                    for p in price : 
+                        if(price.find('Type').text=="sale"):
+                            price=price.find('Net').text
+                            break
+                        if(price.find('Type').text=="normal"):
+                            price=price.find('Net').text
                 except:
                     price="N\A"
                 self.inventory.append(Product_xml(state,ids,sku,stock,image,price))
