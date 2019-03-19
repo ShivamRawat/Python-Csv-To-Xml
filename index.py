@@ -96,7 +96,7 @@ class inventory_xml():
                 except:
                     image="N/A"
                 try:
-                    price=i.find('Prices').findAll('Price')
+                    price=i.find('Prices').findall('Price')
                     for p in price : 
                         if(price.find('Type').text=="sale"):
                             price=price.find('Net').text
