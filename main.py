@@ -27,7 +27,7 @@ class CheckInInventory:
                     self.main_dictionary = self.size_dictionary_sec
                 id_prod=row[0].split('/')[1]
                 for single_column in self.main_column:
-                    if id_prod==single_column.find(class_="color-name").get_text().split(' ')[0]:
+                    if id_prod==single_column.find(class_="color-name").get_text().replace("\t"," ").split(' ')[0]:
                         num=int(self.main_dictionary[row[0].split('/')[2]])
                         available=int((single_column.find(class_="cBsecondLine").find_all(class_="assortTypeFixed"))[num].get_text().replace("+","").strip())
                         if(available>0):
