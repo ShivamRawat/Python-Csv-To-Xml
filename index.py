@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 import requests
 doc, tag, text = Doc().tagtext()
 
-    
+#comment
 class Product:
     def __init__(self,*args):
         args=args[0]
